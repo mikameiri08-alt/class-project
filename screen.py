@@ -46,6 +46,7 @@ def draw_flag():
                                           FLAG_ROWS * CELL_SIZE))
 
     screen.blit(flag_img, (flag_row, flag_col))
+
 create_screen()
 
 # def drawGrid():

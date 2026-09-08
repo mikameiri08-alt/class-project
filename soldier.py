@@ -3,10 +3,9 @@ from constants import *
 # from screen import *
 
 
-
 def move_soldier(x, y, event, velocity=12):
     """
-    מזיזה את החייל על סמך לחיצות מקשים.
+    מזיזה את החייל על סמך לחיצות מקשים ושומרת עליו בתוך גבולות המסך.
     מחזירה את ה-x וה-y המעודכנים של החייל.
     """
     if event.type == pygame.KEYDOWN:
@@ -19,6 +18,21 @@ def move_soldier(x, y, event, velocity=12):
         if event.key == pygame.K_DOWN:
             y += velocity
 
+    # --- מנגנון חסימת יציאה מגבולות המסך ---
+    # חסימה משמאל ומלמעלה
+    if x < 0:
+        x = 0
+    if y < 0:
+        y = 0
+
+    # חסימה מימין ומלמטה (מתחשב בגודל החייל בפיקסלים)
+    soldier_width = SOLDIER_COLS * CELL_SIZE
+    soldier_height = SOLDIER_ROWS * CELL_SIZE
+
+    if x + soldier_width > WINDOW_WIDTH:
+        x = WINDOW_WIDTH - soldier_width
+    if y + soldier_height > WINDOW_HEIGHT:
+        y = WINDOW_HEIGHT - soldier_height
 
     return x, y
 
