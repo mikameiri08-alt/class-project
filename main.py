@@ -1,1 +1,5 @@
-print("h")
+
+
+
+def main():
+    pass
