@@ -1,21 +1,36 @@
-import screen
 import pygame
-import soldier
-from soldier import *
-from game_field import *
-
+from constants import *
+import screen
+from soldier import move_soldier, draw_soldier
 
 def main():
+    pygame.init()
     screen.create_screen()
 
+    player_x = START_X_PLAYER
+    player_y = START_Y_PLAYER
 
-    # game_field, level_mines = generate_mines(NUM_OF_MINES)
+    clock = pygame.time.Clock()
 
-    # events = pygame.event.get()
-    # move_soldier(START_X_PLAYER, START_Y_PLAYER, events, velocity=12)
-    # for event in events:
-    #     if event.type == pygame.KEYDOWN:
-    #         if event.key == pygame.K_KP_ENTER:
-    #             screen.drawGrid()
+    run = True
+    while run:
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                run = False
 
-main()
+        screen.screen.fill(SCREEN_COLOR)
+
+        screen.draw_grass()
+        screen.draw_flag()
+
+        player_x, player_y = move_soldier(player_x, player_y)
+        draw_soldier(player_x, player_y, screen.screen)
+        pygame.display.flip()
+        clock.tick(10)
+
+    pygame.quit()
+
+if __name__ == "__main__":
+    main()
+
+

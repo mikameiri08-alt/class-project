@@ -2,9 +2,14 @@ import pygame
 import random
 from constants import *
 
+# 1. טעינת תמונות ושינוי גודל מראש (פעם אחת בלבד)
 mine_image = pygame.image.load('mine.png')
 mine_img = pygame.transform.scale(mine_image,
                                   (3 * CELL_SIZE, MINE_ROWS * CELL_SIZE))
+
+flag_image = pygame.image.load('flag.png')  # ודאי שיש לך קובץ flag.png בתיקייה
+flag_img = pygame.transform.scale(flag_image,
+                                  (FLAG_COLS * CELL_SIZE, FLAG_ROWS * CELL_SIZE))
 
 
 def generate_mines(num_of_mines):
@@ -15,6 +20,7 @@ def generate_mines(num_of_mines):
     all_possible_positions = []
     for row in range(BOARD_ROWS):
         for col in range(BOARD_COLS - 2):
+            # מניעת שתילת מוקש באזור הצעדים הראשונים של החייל
             if row < SOLDIER_ROWS and col < SOLDIER_COLS:
                 continue
             all_possible_positions.append((row, col))
@@ -37,3 +43,15 @@ def draw_mines(screen, mine_positions):
         x = col * CELL_SIZE
         y = row * CELL_SIZE
         screen.blit(mine_img, (x, y))
+
+
+def get_flag_position():
+    """מחזירה את מיקום הדגל בפיקסלים (בפינה הימנית התחתונה של הלוח)"""
+    flag_x = WINDOW_WIDTH - (FLAG_COLS * CELL_SIZE)
+    flag_y = WINDOW_HEIGHT - (FLAG_ROWS * CELL_SIZE)
+    return flag_x, flag_y
+
+
+def draw_flag(screen, flag_x, flag_y):
+    """מציירת את הדגל על המסך במיקום שלו"""
+    screen.blit(flag_img, (flag_x, flag_y))

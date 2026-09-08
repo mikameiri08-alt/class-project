@@ -1,31 +1,35 @@
 import pygame
 from constants import *
-# from screen import *
+
+# 1. טעינת התמונה ושינוי הגודל שלה פעם אחת בלבד מראש (מחוץ לפונקציה)
+soldier_image = pygame.image.load(r'soldier.png')
+soldier_img = pygame.transform.scale(soldier_image,
+                                     (SOLDIER_COLS * CELL_SIZE,
+                                      SOLDIER_ROWS * CELL_SIZE))
 
 
-def move_soldier(x, y, event, velocity=12):
+def move_soldier(x, y):
     """
     מזיזה את החייל על סמך לחיצות מקשים ושומרת עליו בתוך גבולות המסך.
     מחזירה את ה-x וה-y המעודכנים של החייל.
     """
-    if event.type == pygame.KEYDOWN:
-        if event.key == pygame.K_LEFT:
-            x -= velocity
-        if event.key == pygame.K_RIGHT:
-            x += velocity
-        if event.key == pygame.K_UP:
-            y -= velocity
-        if event.key == pygame.K_DOWN:
-            y += velocity
+    key = pygame.key.get_pressed()
+
+    if key[pygame.K_LEFT]:
+        x = x - CELL_SIZE
+    elif key[pygame.K_RIGHT]:
+        x = x + CELL_SIZE
+    elif key[pygame.K_UP]:
+        y = y - CELL_SIZE
+    elif key[pygame.K_DOWN]:
+        y = y + CELL_SIZE
 
     # --- מנגנון חסימת יציאה מגבולות המסך ---
-    # חסימה משמאל ומלמעלה
     if x < 0:
         x = 0
     if y < 0:
         y = 0
 
-    # חסימה מימין ומלמטה (מתחשב בגודל החייל בפיקסלים)
     soldier_width = SOLDIER_COLS * CELL_SIZE
     soldier_height = SOLDIER_ROWS * CELL_SIZE
 
@@ -37,14 +41,9 @@ def move_soldier(x, y, event, velocity=12):
     return x, y
 
 
-def draw_soldier(START_X_PLAYER, START_Y_PLAYER,screen):
-    """מציירת את החייל על המסך במיקום הנוכחי שלו"""
-    soldier_image = pygame.image.load(r'soldier.png')
-    soldier_img = pygame.transform.scale(soldier_image,
-                                         (SOLDIER_COLS * CELL_SIZE,
-                                          SOLDIER_ROWS * CELL_SIZE))
-
-    screen.blit(soldier_img, (START_X_PLAYER, START_Y_PLAYER))
+def draw_soldier(player_x, player_y, screen):
+    """מציירת את החייל על המסך במיקום הנוכחי שלו ביעילות"""
+    screen.blit(soldier_img, (player_x, player_y))
 
 
 def check_mine_collision(player_x, player_y, mine_positions):
@@ -63,6 +62,7 @@ def check_mine_collision(player_x, player_y, mine_positions):
             return True
     return False
 
+
 def touched_flag(player_x, player_y, flag_x, flag_y):
     """בדיקה האם גוף החייל נוגע בדגל"""
     body_rect = pygame.Rect(player_x, player_y,
@@ -74,4 +74,3 @@ def touched_flag(player_x, player_y, flag_x, flag_y):
                             FLAG_ROWS * CELL_SIZE)
 
     return body_rect.colliderect(flag_rect)
-
