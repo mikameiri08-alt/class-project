@@ -1,16 +1,31 @@
 import pygame
 from constants import *
+import random
+
+
+screen = pygame.display.set_mode((WINDOW_WIDTH, WINDOW_HEIGHT))
+
+# יצירת מסך
+def create_screen():
+    background_colour =SCREEN_COLOR
+    pygame.display.set_caption('Geeksforgeeks')
+    screen.fill(background_colour)
+    pygame.display.flip()
+    running = True
+    while running:
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                running = False
 
 
 
-screen = pygame.display.set_mode((BOARD_ROWS, BOARD_COLS))
 
-background_colour =SCREEN_COLOR
-pygame.display.set_caption('Geeksforgeeks')
-screen.fill(background_colour)
-pygame.display.flip()
-running = True
-while running:
-    for event in pygame.event.get():
-        if event.type == pygame.QUIT:
-            running = False
+def draw_grass():
+    imp = pygame.image.load("grass.png").convert()
+
+    for i in range (20):
+        x=random.randint(0,WINDOW_WIDTH-10)
+        y=random.randint(0,WINDOW_HEIGHT-10)
+        screen.blit(imp, (x,y))
+
+
