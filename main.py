@@ -1,5 +1,10 @@
+import screen
+
 
 
 
 def main():
-    pass
+    screen.create_screen()
+    screen.draw_grass()
+
+main()
