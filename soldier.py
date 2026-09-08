@@ -22,7 +22,10 @@ def move_soldier(x, y, event, velocity=12):
             y -= velocity
         if event.key == pygame.K_DOWN:
             y += velocity
+
+
     return x, y
+
 
 def draw_soldier(x, y):
     """מציירת את החייל על המסך במיקום הנוכחי שלו"""
