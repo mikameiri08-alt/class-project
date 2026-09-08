@@ -1,17 +1,15 @@
 import pygame
 from constants import *
 
-# 1. טעינת התמונה מראש פעם אחת בלבד (מחקנו את השורה from screen import screen)
 soldier_image = pygame.image.load(r'soldier.png')
 soldier_img = pygame.transform.scale(soldier_image,
                                      (SOLDIER_COLS * CELL_SIZE,
                                       SOLDIER_ROWS * CELL_SIZE))
 
 def move_soldier(x, y):
-    """
-    מזיזה את החייל על סמך לחיצות מקשים ושומרת עליו בתוך גבולות המסך.
-    מחזירה את ה-x וה-y המעודכנים של החייל, וגם האם אנטר לחוץ.
-    """
+    """Moves the soldier based on keystrokes and keeps him within the screen boundaries.
+     Returns the soldier's updated x and y, and whether Enter was pressed."""
+
     key = pygame.key.get_pressed()
     enter_pressed = False
 
@@ -26,7 +24,8 @@ def move_soldier(x, y):
     elif key[pygame.K_RETURN]:
         enter_pressed = True
 
-    # --- מנגנון חסימת יציאה מגבולות המסך ---
+
+    # Screen border blocking mechanism
     if x < 0:
         x = 0
     if y < 0:
@@ -44,14 +43,14 @@ def move_soldier(x, y):
 
 
 def draw_soldier(player_x, player_y, screen):
-    """מציירת את החייל על המסך (משתמשת במשתנה screen שמתקבל מבחוץ)"""
+    """Draws the soldier on the screen"""
     screen.blit(soldier_img, (player_x, player_y))
 
 
 
 
 def check_mine_collision(player_x, player_y, mine_positions):
-    """בודק האם רגלי החייל נוגעות באחד מהמוקשים ללא שימוש במחלקה"""
+    """Checks whether the soldier's feet are touching one of the mines"""
     legs_y = player_y + (SOLDIER_BODY_ROWS * CELL_SIZE)
     legs_rect = pygame.Rect(player_x, legs_y, SOLDIER_COLS * CELL_SIZE,
                             SOLDIER_FEET_ROWS * CELL_SIZE)
@@ -68,7 +67,7 @@ def check_mine_collision(player_x, player_y, mine_positions):
 
 
 def touched_flag(player_x, player_y, flag_x, flag_y):
-    """בדיקה האם גוף החייל נוגע בדגל"""
+    """Checking whether the soldier's body is touching the flag"""
     body_rect = pygame.Rect(player_x, player_y,
                             SOLDIER_COLS * CELL_SIZE,
                             SOLDIER_BODY_ROWS * CELL_SIZE)
