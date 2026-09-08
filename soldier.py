@@ -9,10 +9,9 @@ class Soldier:
         self.y = y
         self.velocity = velocity
 
-        # Load and scale the sprite image using CELL_SIZE
         image = pygame.image.load(r'soldier.png')
         self.img = pygame.transform.scale(image,
-                                          (2 * CELL_SIZE, 4 * CELL_SIZE))
+                                          (SOLDIER_COLS * CELL_SIZE, SOLDIER_ROWS * CELL_SIZE))
 
     def handle_event(self, event):
         """Update coordinates based on keyboard input"""
@@ -30,14 +29,20 @@ class Soldier:
         """Draw the soldier onto the main display window"""
         screen.blit(self.img, (self.x, self.y))
 
-    def touched_flag(self, flag):
-        player_rect = pygame.Rect(self.x, self.y, self.img.get_width(),
-                                  self.img.get_height())
+    def touched_mine(self, mine):
+        soldier_actual_width = self.img.get_width()
+        soldier_actual_height = self.img.get_height()
 
-        flag_rect = pygame.Rect(flag.x, flag.y, flag.img.get_width(),
-                                flag.img.get_height())
+        legs_y = self.y + (soldier_actual_height - CELL_SIZE)
+        legs_height = CELL_SIZE
 
-        return player_rect.colliderect(flag_rect)
+        legs_rect = pygame.Rect(self.x, legs_y, soldier_actual_width,
+                                legs_height)
+
+        mine_rect = pygame.Rect(mine.x, mine.y, mine.img.get_width(),
+                                mine.img.get_height())
+
+        return legs_rect.colliderect(mine_rect)
 
     def touched_mine(self, mine):
         player_rect = pygame.Rect(self.x, self.y, self.img.get_width(),
