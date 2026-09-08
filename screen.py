@@ -4,7 +4,6 @@ import random
 import game_field
 
 pygame.init()
-
 screen = pygame.display.set_mode((WINDOW_WIDTH, WINDOW_HEIGHT))
 
 imp = pygame.image.load('grass.png')

@@ -4,7 +4,6 @@ import screen
 from soldier import move_soldier, draw_soldier, check_mine_collision, \
     touched_flag
 
-
 def main():
     pygame.init()
     screen.create_screen()
@@ -64,7 +63,6 @@ def main():
         clock.tick(10)
 
     pygame.quit()
-
 
 if __name__ == "__main__":
     main()
