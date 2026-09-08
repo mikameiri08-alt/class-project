@@ -1,7 +1,11 @@
 import pygame
+from constants import *
 
-background_colour = (234, 212, 252)
-screen = pygame.display.set_mode((300, 300))
+
+
+screen = pygame.display.set_mode((BOARD_ROWS, BOARD_COLS))
+
+background_colour =SCREEN_COLOR
 pygame.display.set_caption('Geeksforgeeks')
 screen.fill(background_colour)
 pygame.display.flip()
