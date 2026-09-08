@@ -1,19 +1,19 @@
 import pygame
 from constants import *
 
-# 1. טעינת התמונה ושינוי הגודל שלה פעם אחת בלבד מראש (מחוץ לפונקציה)
+# 1. טעינת התמונה מראש פעם אחת בלבד (מחקנו את השורה from screen import screen)
 soldier_image = pygame.image.load(r'soldier.png')
 soldier_img = pygame.transform.scale(soldier_image,
                                      (SOLDIER_COLS * CELL_SIZE,
                                       SOLDIER_ROWS * CELL_SIZE))
 
-
 def move_soldier(x, y):
     """
     מזיזה את החייל על סמך לחיצות מקשים ושומרת עליו בתוך גבולות המסך.
-    מחזירה את ה-x וה-y המעודכנים של החייל.
+    מחזירה את ה-x וה-y המעודכנים של החייל, וגם האם אנטר לחוץ.
     """
     key = pygame.key.get_pressed()
+    enter_pressed = False
 
     if key[pygame.K_LEFT]:
         x = x - CELL_SIZE
@@ -23,6 +23,8 @@ def move_soldier(x, y):
         y = y - CELL_SIZE
     elif key[pygame.K_DOWN]:
         y = y + CELL_SIZE
+    elif key[pygame.K_RETURN]:
+        enter_pressed = True
 
     # --- מנגנון חסימת יציאה מגבולות המסך ---
     if x < 0:
@@ -38,12 +40,14 @@ def move_soldier(x, y):
     if y + soldier_height > WINDOW_HEIGHT:
         y = WINDOW_HEIGHT - soldier_height
 
-    return x, y
+    return x, y, enter_pressed
 
 
 def draw_soldier(player_x, player_y, screen):
-    """מציירת את החייל על המסך במיקום הנוכחי שלו ביעילות"""
+    """מציירת את החייל על המסך (משתמשת במשתנה screen שמתקבל מבחוץ)"""
     screen.blit(soldier_img, (player_x, player_y))
+
+
 
 
 def check_mine_collision(player_x, player_y, mine_positions):
