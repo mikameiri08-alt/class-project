@@ -6,7 +6,7 @@ mine_image = pygame.image.load('mine.png')
 mine_img = pygame.transform.scale(mine_image,
                                   (3 * CELL_SIZE, MINE_ROWS * CELL_SIZE))
 
-
+#
 def generate_mines(num_of_mines):
     """מגריל מיקומים למוקשים באורך 3 ומחזיר את המטריצה ורשימת הקואורדינטות"""
     field = [[0 for _ in range(BOARD_COLS)] for _ in range(BOARD_ROWS)]
