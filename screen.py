@@ -1,56 +1,53 @@
 import pygame
 from constants import *
 import random
-import game_field  # ודאי שקובץ game_field מיובא כאן
+import game_field
 
 pygame.init()
 
 screen = pygame.display.set_mode((WINDOW_WIDTH, WINDOW_HEIGHT))
 
-# --- טעינת תמונות פעם אחת מראש ---
 imp = pygame.image.load('grass.png')
 img = pygame.transform.scale(imp, (3 * CELL_SIZE, 2 * CELL_SIZE))
 
 flag_image = pygame.image.load(r'flag.png')
 flag_img = pygame.transform.scale(flag_image, (FLAG_COLS * CELL_SIZE, FLAG_ROWS * CELL_SIZE))
 
-# --- הגרלת מיקומי הדשא פעם אחת מראש ---
 grass_positions = []
 for i in range(NUM_GRASS):
     gx = random.randint(0, WINDOW_WIDTH - (3 * CELL_SIZE))
     gy = random.randint(0, WINDOW_HEIGHT - (2 * CELL_SIZE))
     grass_positions.append((gx, gy))
 
-# --- הוספה: הגרלת מיקומי המוקשים פעם אחת מראש (בדיוק כמו הדשא!) ---
-# הפונקציה מחזירה את המטריצה ואת רשימת המיקומים הקבועה
 field_matrix, level_mines = game_field.generate_mines(NUM_OF_MINES)
 
 
 def create_screen():
+    """setting up the game window title"""
     pygame.display.set_caption('The flag')
 
 
 def draw_grass():
-    """מצייר את הדשא במיקומים הקבועים שנקבעו מראש"""
+    """drawing the grass where we randomized it"""
     for pos in grass_positions:
         screen.blit(img, pos)
 
 
 def draw_flag():
+    """drawing the flag"""
     flag_x = WINDOW_WIDTH - (FLAG_COLS * CELL_SIZE)
     flag_y = WINDOW_HEIGHT - (FLAG_ROWS * CELL_SIZE)
     screen.blit(flag_img, (flag_x, flag_y))
 
 
-# --- הוספה: פונקציה שמציירת את המוקשים הקבועים שהגרלנו מראש ---
 def draw_mines_on_screen():
-    """מציירת את המוקשים מתוך הרשימה הקבועה level_mines"""
+    """drawing the generated mines from the static list onto the screen"""
     game_field.draw_mines(screen, level_mines)
 
 
 def drawGrid():
-    """מצייר את הרשת בלבד - כעת היא נקייה לחלוטין ולא מזיזה מוקשים!"""
-    screen.fill(BLACK)  # או צבע רקע הרשת שלך
+    """drawing the visual grid lines across the field"""
+    screen.fill(BLACK)  # clears the background to black for the grid view
     blockSize = CELL_SIZE
     for x in range(0, WINDOW_WIDTH, blockSize):
         for y in range(0, WINDOW_HEIGHT, blockSize):
