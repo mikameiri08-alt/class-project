@@ -1,12 +1,8 @@
 import pygame
 from constants import *
-from screen import screen
+# from screen import *
 
-# טעינת תמונת החייל ושינוי גודל פעם אחת מראש
-soldier_image = pygame.image.load(r'soldier.png')
-soldier_img = pygame.transform.scale(soldier_image,
-                                      (SOLDIER_COLS * CELL_SIZE,
-                                       SOLDIER_ROWS * CELL_SIZE))
+
 
 def move_soldier(x, y, event, velocity=12):
     """
@@ -27,25 +23,31 @@ def move_soldier(x, y, event, velocity=12):
     return x, y
 
 
-def draw_soldier(x, y):
+def draw_soldier(START_X_PLAYER, START_Y_PLAYER,screen):
     """מציירת את החייל על המסך במיקום הנוכחי שלו"""
-    screen.blit(soldier_img, (x, y))
+    soldier_image = pygame.image.load(r'soldier.png')
+    soldier_img = pygame.transform.scale(soldier_image,
+                                         (SOLDIER_COLS * CELL_SIZE,
+                                          SOLDIER_ROWS * CELL_SIZE))
 
-def touched_mine(player_x, player_y, mine_x, mine_y):
-    """בדיקה האם רגלי החייל נוגעות במוקש מסוים"""
-    # הרגליים מתחילות מתחת לגוף (מורידים את גובה הגוף בפיקסלים)
+    screen.blit(soldier_img, (START_X_PLAYER, START_Y_PLAYER))
+
+
+def check_mine_collision(player_x, player_y, mine_positions):
+    """בודק האם רגלי החייל נוגעות באחד מהמוקשים ללא שימוש במחלקה"""
     legs_y = player_y + (SOLDIER_BODY_ROWS * CELL_SIZE)
-
-    legs_rect = pygame.Rect(player_x, legs_y,
-                            SOLDIER_COLS * CELL_SIZE,
+    legs_rect = pygame.Rect(player_x, legs_y, SOLDIER_COLS * CELL_SIZE,
                             SOLDIER_FEET_ROWS * CELL_SIZE)
 
-    # המוקש באורך 3 משבצות אופקית (כפי שהגדרנו ב-game_field)
-    mine_rect = pygame.Rect(mine_x, mine_y,
-                            3 * CELL_SIZE,
-                            MINE_ROWS * CELL_SIZE)
+    for row, col in mine_positions:
+        mine_x = col * CELL_SIZE
+        mine_y = row * CELL_SIZE
+        mine_rect = pygame.Rect(mine_x, mine_y, 3 * CELL_SIZE,
+                                MINE_ROWS * CELL_SIZE)
 
-    return legs_rect.colliderect(mine_rect)
+        if legs_rect.colliderect(mine_rect):
+            return True
+    return False
 
 def touched_flag(player_x, player_y, flag_x, flag_y):
     """בדיקה האם גוף החייל נוגע בדגל"""
@@ -53,9 +55,9 @@ def touched_flag(player_x, player_y, flag_x, flag_y):
                             SOLDIER_COLS * CELL_SIZE,
                             SOLDIER_BODY_ROWS * CELL_SIZE)
 
-    # יצירת מלבן הדגל בפיקסלים (החלפנו לרוחב ואז גובה)
     flag_rect = pygame.Rect(flag_x, flag_y,
                             FLAG_COLS * CELL_SIZE,
                             FLAG_ROWS * CELL_SIZE)
 
     return body_rect.colliderect(flag_rect)
+

@@ -1,7 +1,10 @@
 import pygame
 from constants import *
 import random
+import soldier
+from soldier import *
 import game_field
+
 
 pygame.init()
 
@@ -14,7 +17,9 @@ def create_screen():
     pygame.display.set_caption('The flag')
     screen.fill(background_colour)
     draw_grass()
+    draw_flag()
 
+    draw_soldier(START_X_PLAYER, START_Y_PLAYER, screen)
     pygame.display.flip()
     running = True
 
@@ -22,9 +27,6 @@ def create_screen():
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 running = False
-
-
-
 
 def draw_grass():
 
@@ -37,18 +39,26 @@ def draw_grass():
         y=random.randint(0,WINDOW_HEIGHT-(2 * CELL_SIZE))
         screen.blit(img, (x,y))
 
+def draw_flag():
+    flag_image = pygame.image.load(r'flag.png')
+    flag_img = pygame.transform.scale(flag_image,
+                                         (FLAG_COLS * CELL_SIZE,
+                                          FLAG_ROWS * CELL_SIZE))
 
+    screen.blit(flag_img, (flag_row, flag_col))
+create_screen()
 
-def drawGrid():
-    screen.fill(BLACK)
-    blockSize = BLOCK_SIZE  # Set the size of the grid block
-    for x in range(0, WINDOW_WIDTH, blockSize):
-        for y in range(0, WINDOW_HEIGHT, blockSize):
-            rect = pygame.Rect(x, y, blockSize, blockSize)
-            pygame.draw.rect(screen, GREEN, rect, 1)
-
-    field=game_field.generate_mines(NUM_OF_MINES)
-    for i in range (len (field)):
-        for j in range (len(field[i])):
+# def drawGrid():
+#     screen.fill(BLACK)
+#     blockSize = BLOCK_SIZE  # Set the size of the grid block
+#     for x in range(0, WINDOW_WIDTH, blockSize):
+#         for y in range(0, WINDOW_HEIGHT, blockSize):
+#             rect = pygame.Rect(x, y, blockSize, blockSize)
+#             pygame.draw.rect(screen, GREEN, rect, 1)
+#
+#     field, mine_positions=game_field.generate_mines(NUM_OF_MINES)
+#
+#     game_filed.draw_mines(screen, mine_positions)
+#
 
 

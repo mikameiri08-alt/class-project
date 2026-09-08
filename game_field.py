@@ -37,20 +37,3 @@ def draw_mines(screen, mine_positions):
         x = col * CELL_SIZE
         y = row * CELL_SIZE
         screen.blit(mine_img, (x, y))
-
-
-def check_mine_collision(player_x, player_y, mine_positions):
-    """בודק האם רגלי החייל נוגעות באחד מהמוקשים ללא שימוש במחלקה"""
-    legs_y = player_y + (SOLDIER_BODY_ROWS * CELL_SIZE)
-    legs_rect = pygame.Rect(player_x, legs_y, SOLDIER_COLS * CELL_SIZE,
-                            SOLDIER_FEET_ROWS * CELL_SIZE)
-
-    for row, col in mine_positions:
-        mine_x = col * CELL_SIZE
-        mine_y = row * CELL_SIZE
-        mine_rect = pygame.Rect(mine_x, mine_y, 3 * CELL_SIZE,
-                                MINE_ROWS * CELL_SIZE)
-
-        if legs_rect.colliderect(mine_rect):
-            return True
-    return False
