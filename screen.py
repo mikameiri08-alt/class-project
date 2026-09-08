@@ -47,7 +47,7 @@ def draw_flag():
 
     screen.blit(flag_img, (flag_row, flag_col))
 create_screen()
-#
+
 # def drawGrid():
 #     screen.fill(BLACK)
 #     blockSize = BLOCK_SIZE  # Set the size of the grid block

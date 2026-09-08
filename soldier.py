@@ -32,7 +32,7 @@ def draw_soldier(START_X_PLAYER, START_Y_PLAYER,screen):
 
     screen.blit(soldier_img, (START_X_PLAYER, START_Y_PLAYER))
 
-#
+
 def check_mine_collision(player_x, player_y, mine_positions):
     """בודק האם רגלי החייל נוגעות באחד מהמוקשים ללא שימוש במחלקה"""
     legs_y = player_y + (SOLDIER_BODY_ROWS * CELL_SIZE)
