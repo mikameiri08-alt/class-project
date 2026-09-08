@@ -2,7 +2,7 @@ import pygame
 from constants import *
 import random
 
-
+pygame.init()
 screen = pygame.display.set_mode((WINDOW_WIDTH, WINDOW_HEIGHT))
 
 # יצירת מסך
@@ -18,8 +18,6 @@ def create_screen():
                 running = False
 
 
-
-
 def draw_grass():
     imp = pygame.image.load("grass.png").convert()
 
@@ -27,5 +25,3 @@ def draw_grass():
         x=random.randint(0,WINDOW_WIDTH-10)
         y=random.randint(0,WINDOW_HEIGHT-10)
         screen.blit(imp, (x,y))
-
-

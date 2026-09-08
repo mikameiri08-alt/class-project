@@ -1,56 +1,49 @@
-from constants import *
 import pygame
-from pygame.locals import *
-
-pygame.init()
-
-# Create the display surface object of specific dimension.
-window = pygame.display.set_mode((600, 600))
-
-# Add caption in the window
-pygame.display.set_caption('Player Movement')
-
-# Add player sprite image (make sure 'soldier.png' is in the same folder)
-image = pygame.image.load(r'soldier.png')
-img = pygame.transform.scale(image, (2*CELL_SIZE, 4*CELL_SIZE))
+from constants import *
+from screen import screen
 
 
+class Soldier:
+    def __init__(self, x=0, y=0, velocity=12):
+        self.x = x
+        self.y = y
+        self.velocity = velocity
 
-# Store the initial coordinates of the player
-x = 0
-y = 0
+        # Load and scale the sprite image using CELL_SIZE
+        image = pygame.image.load(r'soldier.png')
+        self.img = pygame.transform.scale(image,
+                                          (2 * CELL_SIZE, 4 * CELL_SIZE))
 
-# Create a variable to store the velocity of player's movement
-velocity = 12
-
-# Creating an Infinite loop
-run = True
-while run:
-    # Fill the window with a background color (e.g., White: 255, 255, 255)
-    window.fill((255, 255, 255))
-
-    # Iterate over the list of Event objects
-    for event in pygame.event.get():
-        # Closing the window and program if the type of the event is QUIT
-        if event.type == pygame.QUIT:
-            run = False
-
-        # Checking event key if the type of the event is KEYDOWN
+    def handle_event(self, event):
+        """Update coordinates based on keyboard input"""
         if event.type == pygame.KEYDOWN:
             if event.key == pygame.K_LEFT:
-                x -= velocity
+                self.x -= self.velocity
             if event.key == pygame.K_RIGHT:
-                x += velocity
+                self.x += self.velocity
             if event.key == pygame.K_UP:
-                y -= velocity
+                self.y -= self.velocity
             if event.key == pygame.K_DOWN:
-                y += velocity
+                self.y += self.velocity
 
-    # Display the player sprite at updated x and y coordinates
-    window.blit(img, (x, y))
+    def draw(self):
+        """Draw the soldier onto the main display window"""
+        screen.blit(self.img, (self.x, self.y))
 
-    # Draws the surface object to the screen.
-    pygame.display.update()
+    def touched_flag(self, flag):
+        player_rect = pygame.Rect(self.x, self.y, self.img.get_width(),
+                                  self.img.get_height())
 
-pygame.quit()
-quit()
+        flag_rect = pygame.Rect(flag.x, flag.y, flag.img.get_width(),
+                                flag.img.get_height())
+
+        return player_rect.colliderect(flag_rect)
+
+    def touched_mine(self, mine):
+        player_rect = pygame.Rect(self.x, self.y, self.img.get_width(),
+                                  self.img.get_height())
+
+        mine_rect = pygame.Rect(mine.x, mine.y, mine.img.get_width(),
+                                mine.img.get_height())
+
+        return player_rect.colliderect(mine_rect)
