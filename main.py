@@ -21,13 +21,12 @@ def main():
     # Variables to manage the 1-second visibility window
     show_grid = False
     grid_timer_start = 0
-
+    key_press_times = {}  # Stores: {digit: start_time}
+    key_already_triggered = {}
     run = True
     while run:
-        key_press_times = {}
-        key_already_triggered={}
-
         current_time = pygame.time.get_ticks()
+
 
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
@@ -35,15 +34,22 @@ def main():
 
             elif event.type==pygame.KEYDOWN:
                 if pygame.K_1<=event.key<=pygame.K_9:
-
                     digit = event.key - pygame.K_0
                     key_press_times[digit] = time.time()
-                    key_already_triggered[digit]=False
+                    key_already_triggered[digit] = False
 
+            elif event.type == pygame.KEYUP:
+                if pygame.K_1 <= event.key <= pygame.K_9:
+                    digit = event.key - pygame.K_0
 
+                    if digit in key_press_times:
+                        # If they let go BEFORE 1 second, it's a short press -> SAVE
+                        if not key_already_triggered[digit]:
+                            database.short_press_num(digit)
 
-
-
+                        # Clean up tracking dictionaries
+                        del key_press_times[digit]
+                        del key_already_triggered[digit]
 
         screen.screen.fill(SCREEN_COLOR)
         screen.draw_grass()
@@ -78,6 +84,15 @@ def main():
 
         # Limit the frame rate to ensure controlled, grid-based player movement
         clock.tick(10)
+
+    current_time = time.time()
+    for digit, start_time in list(key_press_times.items()):
+        # Check if the key has been held down for more than 1 second
+        if current_time - start_time >= LONG_PRESS_THRESHOLD:
+            if not key_already_triggered[digit]:
+                database.long_num_press(digit)  # Trigger the LOAD function
+                key_already_triggered[
+                    digit] = True
 
     print(key_press_times)
     pygame.quit()
