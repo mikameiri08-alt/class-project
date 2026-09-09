@@ -1,29 +1,37 @@
+import os
 import pandas as pd
 import screen
 import game_field
 import main
 
-#dictionary to hold the save files
-play_saves = {}
 
 def get_current_data():
-    """get the current data"""
+    """get the current data from the game"""
     return {
-        "grass_positions": [screen.grass_positions],
-        "mine_positions": [game_field.mine_positions],
+        "grass_positions": [str(screen.grass_positions)],
+        # Converted to string to preserve lists/tuples in CSV
+        "mine_positions": [str(game_field.mine_positions)],
         "player_x": [main.player_x],
         "player_y": [main.player_y]
     }
 
+
 def short_press_num(num):
-    """Saves the current game state to the dictionary."""
+    """Saves the current game state directly to a CSV file."""
     df = pd.DataFrame(get_current_data())
-    play_saves[num] = df
+    filename = f"save_slot_{num}.csv"
+    df.to_csv(filename, index=False)
+    print(f"Game successfully exported and saved to {filename}")
+
 
 def long_num_press(num):
-    """Loads and prints the saved game state."""
-    if num not in play_saves:
-        print("Didn't save anything under this number.")
+    """Loads and reads the game state back from the CSV file."""
+    filename = f"save_slot_{num}.csv"
+
+    # Check if the file exists on the disk
+    if not os.path.exists(filename):
+        print(f"No save file found named '{filename}'")
     else:
-        df = play_saves[num]
+        # Read the data back into Python
+        df = pd.read_csv(filename)
         print(df)
