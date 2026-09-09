@@ -101,7 +101,6 @@ def main():
         if check_trap_collision(player_x, player_y, screen.level_traps):
             player_x, player_y = teleport_player(player_x, player_y, screen.level_traps)
 
-
         if touched_guard(player_x, player_y, guard_x, GUARD_START_ROW):
             print("you touched the guard!")
             run = False

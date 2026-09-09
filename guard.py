@@ -15,6 +15,7 @@ def draw_guard(guard_row, guard_col, screen):
 
 
 def touched_guard(player_x, player_y, guard_x, GUARD_START_ROW):
+    """Checking whether the player's body is touching the guard"""
     body_rect = pygame.Rect(player_x, player_y,
                             SOLDIER_COLS * CELL_SIZE,
                             SOLDIER_BODY_ROWS * CELL_SIZE)
@@ -24,6 +25,7 @@ def touched_guard(player_x, player_y, guard_x, GUARD_START_ROW):
                             SOLDIER_BODY_ROWS * CELL_SIZE)
 
     return body_rect.colliderect(guard_rect)
+
 
 def move_guard_right(guard_x):
     guard_x += CELL_SIZE
