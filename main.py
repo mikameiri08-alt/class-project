@@ -3,6 +3,8 @@ from constants import *
 import screen
 from soldier import move_soldier, draw_soldier, check_mine_collision, \
     touched_flag
+import time
+
 
 def main():
     pygame.init()
@@ -19,6 +21,7 @@ def main():
     # Variables to manage the 1-second visibility window
     show_grid = False
     grid_timer_start = 0
+    key_press_times = {}
 
     run = True
     while run:
@@ -27,6 +30,17 @@ def main():
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 run = False
+
+            elif event.type==pygame.KEYDOWN:
+                if pygame.K_1<=event.key<=pygame.K_9:
+
+                    digit = event.key - pygame.K_0
+
+                    key_press_times[digit] = time.time()
+
+
+
+
 
         screen.screen.fill(SCREEN_COLOR)
         screen.draw_grass()
@@ -62,6 +76,7 @@ def main():
         # Limit the frame rate to ensure controlled, grid-based player movement
         clock.tick(10)
 
+    print(key_press_times)
     pygame.quit()
 
 if __name__ == "__main__":
