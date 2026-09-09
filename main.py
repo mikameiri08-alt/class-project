@@ -26,10 +26,11 @@ def main():
     key_press_times = {}  # when the key got pressed
     key_already_triggered = {}  # if already had long press in this num
 
+
     run = True
     while run:
         current_time_ticks = pygame.time.get_ticks()
-        draw_guard(GUARD_START_ROW,GUARD_START_COL, screen)
+        # draw_guard(GUARD_START_ROW,GUARD_START_COL, screen)
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 database.short_press_num("autosave", player_x, player_y)
