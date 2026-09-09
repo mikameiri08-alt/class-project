@@ -30,7 +30,7 @@ def main():
     run = True
     while run:
         current_time_ticks = pygame.time.get_ticks()
-        # draw_guard(GUARD_START_ROW,GUARD_START_COL, screen)
+        draw_guard(GUARD_START_ROW, GUARD_START_COL, screen.screen)
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 database.short_press_num("autosave", player_x, player_y)
@@ -78,7 +78,6 @@ def main():
         screen.draw_traps_on_screen()
 
         player_x, player_y, enter_pressed = move_soldier(player_x, player_y)
-
         if enter_pressed and not show_grid:
             show_grid = True
             grid_timer_start = current_time_ticks
@@ -108,7 +107,7 @@ def main():
             run = False
 
         draw_soldier(player_x, player_y, screen.screen)
-        draw_guard(GUARD_START_ROW, GUARD_START_COL, screen)
+        draw_guard(GUARD_START_ROW, GUARD_START_COL, screen.screen)
         pygame.display.flip()
 
         clock.tick(10)

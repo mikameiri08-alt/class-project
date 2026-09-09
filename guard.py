@@ -1,15 +1,17 @@
 import pygame
-
-from constants import SOLDIER_COLS,CELL_SIZE,SOLDIER_ROWS,WINDOW_WIDTH,SOLDIER_BODY_ROWS,GUARD_START_ROW
+from constants import *
 
 guard_image = pygame.image.load(r'guard.png')
 guard_img = pygame.transform.scale(guard_image,
-                                     (SOLDIER_COLS * CELL_SIZE,
-                                      SOLDIER_ROWS * CELL_SIZE))
-def draw_guard(GUARD_START_ROW, GUARD_START_COL, screen):
-    """Draws the guard on the screen"""
-    # screen.blit(guard_img, (GUARD_START_ROW, GUARD_START_COL))
+                                   (GUARD_COLS * CELL_SIZE,
+                                    GUARD_ROWS * CELL_SIZE))
 
+def draw_guard(guard_row, guard_col, screen):
+    """Draws the guard on the screen at the correct pixel coordinates"""
+    x = GUARD_START_ROW
+    y = GUARD_START_COL
+
+    screen.blit(guard_img, (x, y))
 
 
 def touched_guard(player_x, player_y, guard_x, GUARD_START_ROW):
