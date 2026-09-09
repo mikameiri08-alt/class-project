@@ -16,17 +16,17 @@ def get_current_data():
     }
 
 
-def short_press_num(num):
+def short_press_num(digit):
     """Saves the current game state directly to a CSV file."""
     df = pd.DataFrame(get_current_data())
-    filename = f"save_slot_{num}.csv"
+    filename = f"save_slot_{digit}.csv"
     df.to_csv(filename, index=False)
     print(f"Game successfully exported and saved to {filename}")
 
 
-def long_num_press(num):
+def long_num_press(digit):
     """Loads and reads the game state back from the CSV file."""
-    filename = f"save_slot_{num}.csv"
+    filename = f"save_slot_{digit}.csv"
 
     # Check if the file exists on the disk
     if not os.path.exists(filename):
@@ -35,3 +35,4 @@ def long_num_press(num):
         # Read the data back into Python
         df = pd.read_csv(filename)
         print(df)
+
