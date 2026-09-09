@@ -75,6 +75,7 @@ def main():
         screen.screen.fill(SCREEN_COLOR)
         screen.draw_grass()
         screen.draw_flag()
+        screen.draw_traps_on_screen()
 
         player_x, player_y, enter_pressed = move_soldier(player_x, player_y)
 
@@ -98,16 +99,15 @@ def main():
             run = False
 
         if check_trap_collision(player_x, player_y, screen.level_traps):
-            print("you stepped on a teleport trap!")
-            run = True
+            player_x, player_y = teleport_player(player_x, player_y, screen.level_traps)
+
 
         if touched_guard(player_x, player_y, guard_x, GUARD_START_ROW):
             print("you touched the guard!")
             run = False
 
-
-
         draw_soldier(player_x, player_y, screen.screen)
+        draw_guard(GUARD_START_ROW, GUARD_START_COL, screen)
         pygame.display.flip()
 
         clock.tick(10)

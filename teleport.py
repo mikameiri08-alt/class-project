@@ -18,7 +18,7 @@ def generate_traps(num_of_traps):
             # Preventing the planting of traps in the area of the soldier's first steps
             if row < SOLDIER_ROWS and col < SOLDIER_COLS:
                 continue
-            if row <3 or row>20:
+            if row < 3 or row > 20:
                 continue
             all_possible_positions.append((row, col))
 
@@ -33,6 +33,12 @@ def generate_traps(num_of_traps):
 
     return field, trap_positions
 
+def draw_traps(screen, trap_positions):
+    """Draws all traps on the screen according to the list of locations."""
+    for row, col in trap_positions:
+        x = col * CELL_SIZE
+        y = row * CELL_SIZE
+        screen.blit(teleport_img, (x, y))
 
 def check_trap_collision(player_x, player_y, trap_positions):
     """Checks whether the soldier's feet are touching one of the traps"""
@@ -52,15 +58,17 @@ def check_trap_collision(player_x, player_y, trap_positions):
 
 
 def teleport_player(player_x, player_y, trap_positions):
-    """Teleports the player to a random safe cell on the board if they hit a trap"""
+    """Teleports the player 1 cell above another randomly chosen teleport trap."""
     if check_trap_collision(player_x, player_y, trap_positions):
         print("You stepped on a teleport trap!")
 
         random_place = random.choice(trap_positions)
-        random_col = random_place[0] + CELL_SIZE
-        random_row = random_place[1]
 
-        player_x = random_col * CELL_SIZE
-        player_y = random_row * CELL_SIZE
+        target_row = random_place[0]
+        target_col = random_place[1]
+
+
+        player_x = target_col * CELL_SIZE
+        player_y = (target_row - 1) * CELL_SIZE
 
     return player_x, player_y
