@@ -5,7 +5,7 @@ from soldier import move_soldier, draw_soldier, check_mine_collision, \
     touched_flag
 import database
 from teleport import *
-from guard import touched_guard
+from guard import *
 
 def main():
     pygame.init()
@@ -13,6 +13,8 @@ def main():
 
     player_x = START_X_PLAYER
     player_y = START_Y_PLAYER
+
+    guard_x = GUARD_START_COL
 
     clock = pygame.time.Clock()
     flag_x = WINDOW_WIDTH - (FLAG_COLS * CELL_SIZE)
@@ -27,7 +29,7 @@ def main():
     run = True
     while run:
         current_time_ticks = pygame.time.get_ticks()
-        # guard.draw_guard(0, WINDOW_WIDTH / 2, screen)
+        draw_guard(GUARD_START_ROW,GUARD_START_COL, screen)
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 database.short_press_num("autosave", player_x, player_y)
@@ -96,11 +98,13 @@ def main():
 
         if check_trap_collision(player_x, player_y, screen.level_traps):
             print("you stepped on a teleport trap!")
-            run = False
+            run = True
 
-        if touched_guard(player_x, player_y, guard_x, guard_y):
+        if touched_guard(player_x, player_y, guard_x, GUARD_START_ROW):
             print("you touched the guard!")
             run = False
+
+
 
         draw_soldier(player_x, player_y, screen.screen)
         pygame.display.flip()

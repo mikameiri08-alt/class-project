@@ -2,6 +2,7 @@ import pygame
 from constants import *
 import random
 import game_field
+import teleport
 
 pygame.init()
 
@@ -20,7 +21,7 @@ for i in range(NUM_GRASS):
     grass_positions.append((gx, gy))
 
 field_matrix, level_mines = game_field.generate_mines(NUM_OF_MINES)
-field_matrix, level_traps = game_field.generate_traps(TRAP_COUNT)
+field_matrix, level_traps = teleport.generate_traps(TRAP_COUNT)
 
 
 def create_screen():
