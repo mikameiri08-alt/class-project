@@ -15,7 +15,6 @@ SOLDIER_COLS = 2
 SOLDIER_BODY_ROWS = 3 # the upper part
 SOLDIER_FEET_ROWS = 1 # the lower part
 
-
 FLAG_ROWS = 3
 FLAG_COLS = 4
 # game_field.py
