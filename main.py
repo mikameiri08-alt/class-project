@@ -5,7 +5,7 @@ from soldier import move_soldier, draw_soldier, check_mine_collision, \
     touched_flag
 import database
 from teleport import *
-
+from guard import touched_guard
 
 def main():
     pygame.init()
@@ -15,7 +15,6 @@ def main():
     player_y = START_Y_PLAYER
 
     clock = pygame.time.Clock()
-
     flag_x = WINDOW_WIDTH - (FLAG_COLS * CELL_SIZE)
     flag_y = WINDOW_HEIGHT - (FLAG_ROWS * CELL_SIZE)
 
@@ -28,7 +27,7 @@ def main():
     run = True
     while run:
         current_time_ticks = pygame.time.get_ticks()
-
+        # guard.draw_guard(0, WINDOW_WIDTH / 2, screen)
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 database.short_press_num("autosave", player_x, player_y)
