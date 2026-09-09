@@ -4,6 +4,7 @@ import screen
 from soldier import move_soldier, draw_soldier, check_mine_collision, \
     touched_flag
 import database
+from teleport import *
 
 
 def main():
@@ -30,7 +31,6 @@ def main():
 
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
-                print("Closing game... saving state to autosave slot.")
                 database.short_press_num("autosave", player_x, player_y)
                 run = False
 
@@ -49,8 +49,6 @@ def main():
                     if digit in key_press_times:
                         # short press
                         if not key_already_triggered.get(digit, False):
-                            print(
-                                f"Short press detected! Saving data to slot {digit}...")
                             database.short_press_num(digit, player_x, player_y)
                         else:
                             print(f"Key {digit} released after a long press.")
@@ -97,13 +95,19 @@ def main():
             print("VICTORY!! you reached the flag")
             run = False
 
+        if check_trap_collision(player_x, player_y, screen.level_traps):
+            print("you stepped on a teleport trap!")
+            run = False
+
+        if touched_guard(player_x, player_y, guard_x, guard_y):
+            print("you touched the guard!")
+            run = False
+
         draw_soldier(player_x, player_y, screen.screen)
         pygame.display.flip()
 
         clock.tick(10)
-
     pygame.quit()
-
 
 if __name__ == "__main__":
     main()
