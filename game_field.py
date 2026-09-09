@@ -55,3 +55,4 @@ def get_flag_position():
 def draw_flag(screen, flag_x, flag_y):
     """Draws the flag on the screen at its location"""
     screen.blit(flag_img, (flag_x, flag_y))
+

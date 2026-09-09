@@ -57,6 +57,7 @@ def check_mine_collision(player_x, player_y, mine_positions):
 
     for row, col in mine_positions:
         mine_x = col * CELL_SIZE
+
         mine_y = row * CELL_SIZE
         mine_rect = pygame.Rect(mine_x, mine_y, 3 * CELL_SIZE,
                                 MINE_ROWS * CELL_SIZE)
