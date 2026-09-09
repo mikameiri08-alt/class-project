@@ -11,6 +11,7 @@ def get_current_data(player_x, player_y):
         "grass_positions": [str(screen.grass_positions)],
         # save the current mines
         "mine_positions": [str(screen.level_mines)],
+        "trap position": [str(screen.level_traps)],
         "player_x": [player_x],
         "player_y": [player_y]
     }

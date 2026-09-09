@@ -18,6 +18,8 @@ def generate_traps(num_of_traps):
             # Preventing the planting of traps in the area of the soldier's first steps
             if row < SOLDIER_ROWS and col < SOLDIER_COLS:
                 continue
+            if row <3 or row>20:
+                continue
             all_possible_positions.append((row, col))
 
     sampled_positions = random.sample(all_possible_positions, min(num_of_traps,
@@ -54,8 +56,9 @@ def teleport_player(player_x, player_y, trap_positions):
     if check_trap_collision(player_x, player_y, trap_positions):
         print("You stepped on a teleport trap!")
 
-        random_col = random.randint(0, BOARD_COLS - SOLDIER_COLS)
-        random_row = random.randint(0, BOARD_ROWS - SOLDIER_ROWS)
+        random_place = random.choice(trap_positions)
+        random_col = random_place[0] + CELL_SIZE
+        random_row = random_place[1]
 
         player_x = random_col * CELL_SIZE
         player_y = random_row * CELL_SIZE

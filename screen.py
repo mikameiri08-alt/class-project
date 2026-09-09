@@ -20,7 +20,7 @@ for i in range(NUM_GRASS):
     grass_positions.append((gx, gy))
 
 field_matrix, level_mines = game_field.generate_mines(NUM_OF_MINES)
-
+field_matrix, level_traps = game_field.generate_traps(TRAP_COUNT)
 
 
 def create_screen():
@@ -44,6 +44,10 @@ def draw_flag():
 def draw_mines_on_screen():
     """drawing the generated mines from the static list onto the screen"""
     game_field.draw_mines(screen, level_mines)
+
+def draw_traps_on_screen():
+    """drawing the generated traps from the static list onto the screen"""
+    game_field.draw_mines(screen, level_traps)
 
 
 def drawGrid():
