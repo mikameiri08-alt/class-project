@@ -4,30 +4,27 @@ import pandas as pd
 import screen
 import game_field
 
-
-
-def get_current_data(player_x, player_y):
-    """get the current data from the game"""
+def get_current_data(player_x, player_y, guard_row, guard_x):
+    """Gathers all persistent map layouts and structural positions into a unified dictionary structure"""
     return {
         "grass_positions": [str(screen.grass_positions)],
-        # save the current mines
         "mine_positions": [str(screen.level_mines)],
-        "trap position": [str(screen.level_traps)],
+        "trap_positions": [str(screen.level_traps)],
         "player_x": [player_x],
-        "player_y": [player_y]
+        "player_y": [player_y],
+        "guard_row": [guard_row],
+        "guard_x": [guard_x]
     }
 
-
-def short_press_num(digit, player_x, player_y):
-    """save the data from the game"""
-    df = pd.DataFrame(get_current_data(player_x, player_y))
+def short_press_num(digit, player_x, player_y, guard_row, guard_x):
+    """Saves the active game matrices and entity variables to a designated target file slot"""
+    df = pd.DataFrame(get_current_data(player_x, player_y, guard_row, guard_x))
     filename = f"save_slot_{digit}.csv"
     df.to_csv(filename, index=False)
     print(f"Game successfully saved to {filename}")
 
-
 def long_num_press(digit):
-    """load the data from the game (specific num press)"""
+    """Loads previous game matrices and entity variables from a slot, reconstruction lists using AST parser"""
     filename = f"save_slot_{digit}.csv"
 
     if not os.path.exists(filename):
@@ -36,16 +33,19 @@ def long_num_press(digit):
 
     df = pd.read_csv(filename)
 
-    # get the data from the CVS
+    # Safely reconstruct array data blocks from stored string maps using literal evaluation
     loaded_grass = ast.literal_eval(df["grass_positions"].iloc[0])
     loaded_mines = ast.literal_eval(df["mine_positions"].iloc[0])
+    loaded_traps = ast.literal_eval(df["trap_positions"].iloc[0])
     loaded_x = int(df["player_x"].iloc[0])
     loaded_y = int(df["player_y"].iloc[0])
+    loaded_guard_row = int(df["guard_row"].iloc[0])
+    loaded_guard_x = int(df["guard_x"].iloc[0])
 
-    # update the mines and grass location
     screen.grass_positions = loaded_grass
     screen.level_mines = loaded_mines
     game_field.mine_positions = loaded_mines
+    screen.level_traps = loaded_traps
 
     print(f"Game slot {digit} successfully loaded!")
-    return loaded_x, loaded_y
+    return loaded_x, loaded_y, loaded_guard_row, loaded_guard_x
