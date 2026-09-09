@@ -22,6 +22,7 @@ for i in range(NUM_GRASS):
 field_matrix, level_mines = game_field.generate_mines(NUM_OF_MINES)
 
 
+
 def create_screen():
     """setting up the game window title"""
     pygame.display.set_caption('The flag')

@@ -42,6 +42,7 @@ def main():
 
 
 
+
         screen.screen.fill(SCREEN_COLOR)
         screen.draw_grass()
         screen.draw_flag()

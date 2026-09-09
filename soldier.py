@@ -13,6 +13,7 @@ def move_soldier(x, y):
     key = pygame.key.get_pressed()
     enter_pressed = False
 
+
     if key[pygame.K_LEFT]:
         x = x - CELL_SIZE
     elif key[pygame.K_RIGHT]:
