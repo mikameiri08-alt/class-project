@@ -4,7 +4,7 @@ import screen
 from soldier import move_soldier, draw_soldier, check_mine_collision, \
     touched_flag
 import time
-
+import database
 
 def main():
     pygame.init()
@@ -21,10 +21,12 @@ def main():
     # Variables to manage the 1-second visibility window
     show_grid = False
     grid_timer_start = 0
-    key_press_times = {}
 
     run = True
     while run:
+        key_press_times = {}
+        key_already_triggered={}
+
         current_time = pygame.time.get_ticks()
 
         for event in pygame.event.get():
@@ -35,8 +37,8 @@ def main():
                 if pygame.K_1<=event.key<=pygame.K_9:
 
                     digit = event.key - pygame.K_0
-
                     key_press_times[digit] = time.time()
+                    key_already_triggered[digit]=False
 
 
 
