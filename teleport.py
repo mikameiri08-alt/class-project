@@ -57,6 +57,7 @@ def check_trap_collision(player_x, player_y, trap_positions):
     return False
 
 
+
 def teleport_player(player_x, player_y, trap_positions):
     """Teleports the player 1 cell above another randomly chosen teleport trap."""
     if check_trap_collision(player_x, player_y, trap_positions):

@@ -11,6 +11,7 @@ def draw_guard(GUARD_START_ROW, GUARD_START_COL, screen):
     # screen.blit(guard_img, (GUARD_START_ROW, GUARD_START_COL))
 
 
+
 def touched_guard(player_x, player_y, guard_x, GUARD_START_ROW):
     body_rect = pygame.Rect(player_x, player_y,
                             SOLDIER_COLS * CELL_SIZE,

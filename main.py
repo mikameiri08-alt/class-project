@@ -90,6 +90,7 @@ def main():
             screen.drawGrid()
             screen.draw_mines_on_screen()
 
+
         if check_mine_collision(player_x, player_y, screen.level_mines):
             print("BOOM!!! you stepped on a landmine")
             run = False

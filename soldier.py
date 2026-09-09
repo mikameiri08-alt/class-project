@@ -6,6 +6,7 @@ soldier_img = pygame.transform.scale(soldier_image,
                                      (SOLDIER_COLS * CELL_SIZE,
                                       SOLDIER_ROWS * CELL_SIZE))
 
+
 def move_soldier(x, y):
     """Moves the soldier based on keystrokes and keeps him within the screen boundaries.
      Returns the soldier's updated x and y, and whether Enter was pressed."""

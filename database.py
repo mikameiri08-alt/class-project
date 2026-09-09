@@ -5,6 +5,7 @@ import screen
 import game_field
 
 
+
 def get_current_data(player_x, player_y):
     """get the current data from the game"""
     return {

@@ -2,6 +2,7 @@ import pygame
 import random
 from constants import *
 
+
 # Loading and resizing images
 mine_image = pygame.image.load('mine.png')
 mine_img = pygame.transform.scale(mine_image,
